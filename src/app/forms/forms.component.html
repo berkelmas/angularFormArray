@@ -1,0 +1,42 @@
+<form [formGroup]="form" (submit)="handleSubmit()">
+    <input name="username" type="text" [formControl]="username">
+    <input name="password" type="password" formControlName="password">
+
+    <div formGroupName="address">
+        <h3>Address</h3>
+
+        <input type="text" formControlName="city">
+        <input type="text" formControlName="street">
+        <input type="text" formControlName="apartment">
+    </div>
+
+    <div formArrayName="liste">
+        <h3>Liste</h3>
+        <button type="button" (click)="addItem()">Ekle</button>
+        <button type="button" (click)="removeAll()">Tümünü Kaldır</button>
+
+        <div *ngFor="let item of liste.controls; let i = index">
+            <div [formGroupName]="i">
+                <input type="text" formControlName="city">
+                <input type="text" formControlName="street">
+                <input type="text" formControlName="apartment">
+                <button (click)="removeItem(i)">Bunu Kaldır</button>
+            </div>
+        </div>
+    </div>
+
+    <button type="submit">Gönder</button>
+</form>
+
+{{ form.controls.username.value }}
+{{ username.value }}
+
+<ul *ngIf="articles | async; else loading;">
+    <li *ngFor="let article of articles | async">{{ article.makale_baslik }}</li>
+</ul>
+
+<ng-template #loading>
+    Loading...
+</ng-template>
+
+<button (click)="handleValue()">Change Form</button> 
